@@ -16,6 +16,7 @@ class GameFragment : Fragment() {
     private var point = 0
     private var playerGuess = ""
     private var winGame: Boolean = false
+    private var loseGame: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +79,9 @@ class GameFragment : Fragment() {
             if (winGame){
                 Navigation.findNavController(view).navigate(R.id.goToWinGame)
             }
+            if (loseGame){
+                Navigation.findNavController(view).navigate(R.id.goToLost)
+            }
         }
 
 
@@ -113,6 +117,8 @@ class GameFragment : Fragment() {
             Toast.makeText(activity, "Skriv kun et bogstav", Toast.LENGTH_SHORT).show()
         }
         win()
+        lost()
+
         return
 
     }
@@ -143,6 +149,12 @@ class GameFragment : Fragment() {
     fun win(){
         if (showWord == secretWord){
             winGame = true
+        }
+    }
+
+    fun lost(){
+        if (lives == 0){
+            loseGame = true
         }
     }
 

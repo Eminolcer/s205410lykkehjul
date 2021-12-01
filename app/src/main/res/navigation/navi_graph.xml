@@ -11,7 +11,7 @@
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" >
         <action
-            android:id="@+id/action_gameFragment_to_lostFragment"
+            android:id="@+id/goToLost"
             app:destination="@id/lostFragment" />
         <action
             android:id="@+id/goToWinGame"
@@ -23,7 +23,7 @@
         android:label="fragment_lost"
         tools:layout="@layout/fragment_lost" >
         <action
-            android:id="@+id/action_lostFragment_to_gameFragment"
+            android:id="@+id/goBackLostGame"
             app:destination="@id/gameFragment" />
     </fragment>
     <fragment
