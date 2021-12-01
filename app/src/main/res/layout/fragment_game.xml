@@ -77,7 +77,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="5"
         android:textColor="@color/black"
         android:textSize="17sp"
         android:visibility="invisible"
@@ -153,10 +152,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="2000"
-        android:visibility="invisible"
         android:textColor="@color/black"
         android:textSize="17sp"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/pointView"
         app:layout_constraintTop_toTopOf="@+id/pointView" />
 

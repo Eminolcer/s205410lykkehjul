@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 class GameFragment : Fragment() {
     private var showWord = ""
     private var secretWord = ""
-    private var lives = 0
+    private var lives = 5
     private var point = 0
     private var playerGuess = ""
     private var winGame: Boolean = false
@@ -63,6 +63,8 @@ class GameFragment : Fragment() {
             livesView.setVisibility(View.VISIBLE)
             pointView.setVisibility(View.VISIBLE)
             gameBegin()
+            livesText.text = lives.toString()
+            pointText.text = point.toString()
             Toast.makeText(activity, secretWord, Toast.LENGTH_SHORT).show()
             wordText.text = showWord
         }
@@ -70,6 +72,8 @@ class GameFragment : Fragment() {
         guessButton.setOnClickListener {
             playerGuess = letter.text.toString()
             guess()
+            livesText.text = lives.toString()
+            pointText.text = point.toString()
             wordText.text = showWord
             if (winGame){
                 Navigation.findNavController(view).navigate(R.id.goToWinGame)
@@ -102,6 +106,11 @@ class GameFragment : Fragment() {
                 showWord =
                     showWord.replaceRange(indexOfLetter[1], indexOfLetter[1] + 1, playerGuess)
             }
+        } else if (playerGuess !in secretWord && playerGuess.length == 1){
+            lives = lives -1
+            Toast.makeText(activity, "Du gættede forkert, og mister et liv", Toast.LENGTH_SHORT).show()
+        } else if (playerGuess.length != 1){
+            Toast.makeText(activity, "Skriv kun et bogstav", Toast.LENGTH_SHORT).show()
         }
         win()
         return
