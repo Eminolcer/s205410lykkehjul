@@ -14,7 +14,7 @@
             android:id="@+id/action_gameFragment_to_lostFragment"
             app:destination="@id/lostFragment" />
         <action
-            android:id="@+id/action_gameFragment_to_winFragment"
+            android:id="@+id/goToWinGame"
             app:destination="@id/winFragment" />
     </fragment>
     <fragment

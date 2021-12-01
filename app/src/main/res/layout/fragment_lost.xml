@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#569BFB00"
+    android:background="#AF0F0F"
     tools:context=".lostFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="301dp"
-        android:layout_height="410dp"
-        android:src="@drawable/ic_gameover_background" />
-</FrameLayout>
+        android:id="@+id/lostView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/game_over_r50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/lostButton"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="70dp"
+        android:backgroundTint="@color/white"
+        android:text="Øv, prøv igen"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lostText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Øv, du har desværre tabt"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

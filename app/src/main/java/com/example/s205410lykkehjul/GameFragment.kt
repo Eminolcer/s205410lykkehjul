@@ -5,29 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [GameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var showWord = ""
+    private var secretWord = ""
+    private var lives = 0
+    private var point = 0
+    private var playerGuess = ""
+    private var winGame: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,23 +25,117 @@ class GameFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_game, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GameFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GameFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val start = view.findViewById<Button>(R.id.startButton)
+        val greeting = view.findViewById<TextView>(R.id.welcomeText)
+        val letter = view.findViewById<EditText>(R.id.letterText)
+        val guessButton = view.findViewById<Button>(R.id.guessButton)
+        val wordText = view.findViewById<TextView>(R.id.wordText)
+        val cardView2 = view.findViewById<CardView>(R.id.cardView2)
+        val cardView1 = view.findViewById<CardView>(R.id.cardView)
+        val spinText = view.findViewById<TextView>(R.id.Spintext)
+        val spinButton = view.findViewById<Button>(R.id.spinButton)
+        val categoryText = view.findViewById<TextView>(R.id.categoryText)
+        val livesText = view.findViewById<TextView>(R.id.livesText)
+        val pointText = view.findViewById<TextView>(R.id.pointText)
+        val categoryView = view.findViewById<ImageView>(R.id.categoryView)
+        val livesView = view.findViewById<ImageView>(R.id.livesView)
+        val pointView = view.findViewById<ImageView>(R.id.pointView)
+
+
+
+        start.setOnClickListener {
+            start.setVisibility(View.GONE)
+            greeting.setVisibility(View.GONE)
+            letter.setVisibility(View.VISIBLE)
+            guessButton.setVisibility(View.VISIBLE)
+            wordText.setVisibility(View.VISIBLE)
+            cardView2.setVisibility(View.VISIBLE)
+            cardView1.setVisibility(View.VISIBLE)
+            spinText.setVisibility(View.VISIBLE)
+            spinButton.setVisibility(View.VISIBLE)
+            categoryText.setVisibility(View.VISIBLE)
+            livesText.setVisibility(View.VISIBLE)
+            pointText.setVisibility(View.VISIBLE)
+            categoryView.setVisibility(View.VISIBLE)
+            livesView.setVisibility(View.VISIBLE)
+            pointView.setVisibility(View.VISIBLE)
+            gameBegin()
+            Toast.makeText(activity, secretWord, Toast.LENGTH_SHORT).show()
+            wordText.text = showWord
+        }
+
+        guessButton.setOnClickListener {
+            playerGuess = letter.text.toString()
+            guess()
+            wordText.text = showWord
+            if (winGame){
+                Navigation.findNavController(view).navigate(R.id.goToWinGame)
+            }
+        }
+
+
+    }
+
+    private fun gameBegin() {
+        val sportArray: Array<String> = resources.getStringArray(R.array.Sport)
+        secretWord = sportArray.random()
+
+        repeat(secretWord.length) {
+            showWord = showWord + "_"
+
+        }
+
+    }
+
+    private fun guess() {
+        if (playerGuess in secretWord && playerGuess.length == 1) {
+            val indexOfLetter = secretWord.indexesOf(playerGuess, true)
+            if (indexOfLetter.size == 1) {
+                showWord =
+                    showWord.replaceRange(indexOfLetter[0], indexOfLetter[0] + 1, playerGuess)
+            } else if (indexOfLetter.size == 2) {
+                showWord =
+                    showWord.replaceRange(indexOfLetter[0], indexOfLetter[0] + 1, playerGuess)
+                showWord =
+                    showWord.replaceRange(indexOfLetter[1], indexOfLetter[1] + 1, playerGuess)
+            }
+        }
+        win()
+        return
+
+    }
+
+
+
+    /**
+     * funktionen finder indexet af et bogstav i et string.
+     * Denne funktion er fundet på stack overflow
+     */
+    fun String?.indexesOf(substr: String, ignoreCase: Boolean = false): List<Int> {
+        return this?.let {
+            val indexes = mutableListOf<Int>()
+            var startIndex = 0
+            while (startIndex in 0 until length) {
+                val index = this.indexOf(substr, startIndex, ignoreCase)
+                startIndex = if (index != -1) {
+                    indexes.add(index)
+                    index + substr.length
+                } else {
+                    index
                 }
             }
+            return indexes
+        } ?: emptyList()
     }
+
+    fun win(){
+        if (showWord == secretWord){
+            winGame = true
+        }
+    }
+
+
 }

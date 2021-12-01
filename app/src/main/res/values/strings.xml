@@ -2,4 +2,19 @@
     <string name="app_name">s205410 lykkehjul</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sport">Sport</string>
+    <string name="spinButton">Drej</string>
+
+    <string-array name="Sport">
+        <item>fodbold</item>
+        <item>håndbold</item>
+        <item>bordtennis</item>
+        <item>basketbold</item>
+        <item>ishockey</item>
+        <item>cricket</item>
+        <item>boksning</item>
+        <item>svømning</item>
+        <item>taekwondo</item>
+    </string-array>
+
 </resources>
