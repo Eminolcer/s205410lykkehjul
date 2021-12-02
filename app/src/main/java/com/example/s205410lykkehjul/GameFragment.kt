@@ -156,6 +156,7 @@ class GameFragment : Fragment() {
     /**
      * funktionen finder indexet af et bogstav i et string.
      * Denne funktion er fundet på stack overflow
+     * https://stackoverflow.com/questions/62189457/get-indexes-of-substrings-contained-in-a-string-in-kotlin-way
      */
     fun String?.indexesOf(substr: String, ignoreCase: Boolean = false): List<Int> {
         return this?.let {
