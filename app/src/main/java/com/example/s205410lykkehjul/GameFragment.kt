@@ -17,6 +17,7 @@ class GameFragment : Fragment() {
     private var playerGuess = ""
     private var winGame: Boolean = false
     private var loseGame: Boolean = false
+    private var spinTextResult = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,6 +83,11 @@ class GameFragment : Fragment() {
             if (loseGame){
                 Navigation.findNavController(view).navigate(R.id.goToLost)
             }
+        }
+
+        spinButton.setOnClickListener{
+            spin()
+            spinText.text = spinTextResult
         }
 
 
@@ -156,6 +162,11 @@ class GameFragment : Fragment() {
         if (lives == 0){
             loseGame = true
         }
+    }
+
+    fun spin(){
+        val spinArray: Array<String> = resources.getStringArray(R.array.points)
+        spinTextResult = spinArray.random()
     }
 
 

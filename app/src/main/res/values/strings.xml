@@ -17,4 +17,12 @@
         <item>taekwondo</item>
     </string-array>
 
+    <string-array name="points">
+        <item>Gæt rigtigt og modtag 100 point</item>
+        <item>Gæt rigtigt og modtag 300 point</item>
+        <item>Gæt rigtigt og modtag 500 point</item>
+        <item>Gæt rigtigt og modtag 1000 point</item>
+        <item>Gæt rigtigt og modtag 2000 point</item>
+    </string-array>
+
 </resources>
