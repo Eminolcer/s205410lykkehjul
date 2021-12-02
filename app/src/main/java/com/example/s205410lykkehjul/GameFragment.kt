@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
+import java.lang.Exception
 
 class GameFragment : Fragment() {
     private var showWord = ""
@@ -17,7 +18,11 @@ class GameFragment : Fragment() {
     private var playerGuess = ""
     private var winGame: Boolean = false
     private var loseGame: Boolean = false
+    private var guessCorrect: Boolean = false
     private var spinTextResult = ""
+    private var spinOutcome = 0
+    private var extraLives = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +56,6 @@ class GameFragment : Fragment() {
         start.setOnClickListener {
             start.setVisibility(View.GONE)
             greeting.setVisibility(View.GONE)
-            letter.setVisibility(View.VISIBLE)
-            guessButton.setVisibility(View.VISIBLE)
             wordText.setVisibility(View.VISIBLE)
             cardView2.setVisibility(View.VISIBLE)
             cardView1.setVisibility(View.VISIBLE)
@@ -72,22 +75,33 @@ class GameFragment : Fragment() {
         }
 
         guessButton.setOnClickListener {
+            guessButton.setVisibility(View.INVISIBLE)
+            letter.setVisibility(View.INVISIBLE)
+            spinButton.setVisibility(View.VISIBLE)
             playerGuess = letter.text.toString()
             guess()
             livesText.text = lives.toString()
             pointText.text = point.toString()
             wordText.text = showWord
-            if (winGame){
+            if (winGame) {
                 Navigation.findNavController(view).navigate(R.id.goToWinGame)
             }
-            if (loseGame){
+            if (loseGame) {
                 Navigation.findNavController(view).navigate(R.id.goToLost)
             }
         }
 
-        spinButton.setOnClickListener{
+        spinButton.setOnClickListener {
+            guessButton.setVisibility(View.VISIBLE)
+            letter.setVisibility(View.VISIBLE)
+            spinButton.setVisibility(View.INVISIBLE)
             spin()
+            livesText.text = lives.toString()
+            pointText.text = point.toString()
             spinText.text = spinTextResult
+            if (loseGame) {
+                Navigation.findNavController(view).navigate(R.id.goToLost)
+            }
         }
 
 
@@ -106,6 +120,12 @@ class GameFragment : Fragment() {
 
     private fun guess() {
         if (playerGuess in secretWord && playerGuess.length == 1) {
+            guessCorrect = true
+            point += spinOutcome
+            spinOutcome = 0
+            lives += extraLives
+            extraLives = 0
+
             val indexOfLetter = secretWord.indexesOf(playerGuess, true)
             if (indexOfLetter.size == 1) {
                 showWord =
@@ -116,10 +136,13 @@ class GameFragment : Fragment() {
                 showWord =
                     showWord.replaceRange(indexOfLetter[1], indexOfLetter[1] + 1, playerGuess)
             }
-        } else if (playerGuess !in secretWord && playerGuess.length == 1){
-            lives = lives -1
-            Toast.makeText(activity, "Du gættede forkert, og mister et liv", Toast.LENGTH_SHORT).show()
-        } else if (playerGuess.length != 1){
+        } else if (playerGuess !in secretWord && playerGuess.length == 1) {
+            lives = lives - 1
+            spinOutcome = 0
+            extraLives = 0
+            Toast.makeText(activity, "Du gættede forkert, og mister et liv", Toast.LENGTH_SHORT)
+                .show()
+        } else if (playerGuess.length != 1) {
             Toast.makeText(activity, "Skriv kun et bogstav", Toast.LENGTH_SHORT).show()
         }
         win()
@@ -128,7 +151,6 @@ class GameFragment : Fragment() {
         return
 
     }
-
 
 
     /**
@@ -152,21 +174,34 @@ class GameFragment : Fragment() {
         } ?: emptyList()
     }
 
-    fun win(){
-        if (showWord == secretWord){
+    fun win() {
+        if (showWord == secretWord) {
             winGame = true
         }
     }
 
-    fun lost(){
-        if (lives == 0){
+    fun lost() {
+        if (lives == 0) {
             loseGame = true
         }
     }
 
-    fun spin(){
+    fun spin() {
         val spinArray: Array<String> = resources.getStringArray(R.array.points)
         spinTextResult = spinArray.random()
+
+        val splitString = spinTextResult.split(" ")
+
+        if (splitString[4][1] == '0') {
+            spinOutcome = splitString[4].toInt()
+        }else{
+            when (splitString[4]) {
+            "modtage" -> extraLives = 1
+            "liv" -> lives -= 1
+            "bankerot" -> point = 0
+        }}
+
+
     }
 
 

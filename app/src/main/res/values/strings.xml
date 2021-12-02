@@ -23,6 +23,9 @@
         <item>Gæt rigtigt og modtag 500 point</item>
         <item>Gæt rigtigt og modtag 1000 point</item>
         <item>Gæt rigtigt og modtag 2000 point</item>
+        <item>Gæt rigtigt for at modtage ekstra liv</item>
+        <item>Øv, du mistede et liv</item>
+        <item>Øv, du er gået bankerot</item>
     </string-array>
 
 </resources>
